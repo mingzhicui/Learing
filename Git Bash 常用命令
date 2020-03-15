@@ -1,1 +1,6 @@
+//git bash命令
+git branch  和  git checkout
+git branch:列出本地存在的分支，带有*号的表示当前分支
+git branch -r:查看远程库的分支，其中显示的分支中origin/HEAD->origin/master表示默认分支
+git branch -a:查看本地和远程的分支
 
