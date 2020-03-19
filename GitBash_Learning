@@ -1,1 +1,23 @@
+//GitBash学习
+//廖雪峰官网https://www.liaoxuefeng.com/
+Ⅰ、Git简介
+Git分布式版本控制系统，相比于集中版本控制系统如svn、BitKeeper等，具有如下优点
+1、没有中央服务器，因此不用联网
+2、安全性高，每个人都有完整的版本库，可以相互复制
 
+Ⅱ、Git安装
+支持在Windows、Mac OS x、Linux上安装
+在Windows上安装：
+1、到官网下载git-bash-------git-scm.com
+2、
+i、输入ssh-keygen -t rsa -C"注册github时的邮箱"
+ii、确定密钥保存的文件夹，可以为空，使用默认
+iii、输入密码，可为空
+3、在保存密钥的.ssh文件夹下有两个文件，id_rsa和id_rsa.pub，用记事本打开id_rsa.pub文件，
+复制内容到自己的github中的ssh密钥管理页面，命名并粘贴密钥
+4、输入ssh -T git@github.com并输入yes，检验是否和本地绑定成功
+5、本地配置config信息
+git config --global user.name="github用户名"
+git config --global user.email="github注册邮箱"
+6、克隆github仓库到本地
+定位到本地要保存仓库的文件夹，使用cd命令，使用git clone 仓库地址克隆仓库到本地
