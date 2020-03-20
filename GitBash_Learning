@@ -21,3 +21,18 @@ git config --global user.name="github用户名"
 git config --global user.email="github注册邮箱"
 6、克隆github仓库到本地
 定位到本地要保存仓库的文件夹，使用cd命令，使用git clone 仓库地址克隆仓库到本地
+
+Ⅲ、创建版本库
+1、mkdir learngit 在当前文件创建空的文件夹叫learngit
+2、cd learngit 切换到learngit目录
+3、pwd 显示当前目录的路径
+4、git init 把当前目录变成仓库，此时多了一个.git目录，默认隐藏，使用ls -ah可以看见
+5、git add 文件名.拓展名 添加文件，可添加多个文件，用空格隔开
+6、git commit -m "备注" 可一次提交多个添加的文件
+
+Ⅳ、时光穿梭机
+1、
+(1、git status 查看仓库状态，哪些被修改过
+(2、git diff readme.txt 查看readme.txt被修改了哪些地方
+(3、git add readme.txt 和 git commit -m "备注"进行提交
+2、
