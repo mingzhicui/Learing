@@ -35,4 +35,23 @@ git config --global user.email="github注册邮箱"
 (1、git status 查看仓库状态，哪些被修改过
 (2、git diff readme.txt 查看readme.txt被修改了哪些地方
 (3、git add readme.txt 和 git commit -m "备注"进行提交
-2、
+2、版本回退 回退到上一个操作
+
+┌────┐
+│HEAD│
+└────┘
+   │
+   └──> ○ append GPL
+        │
+        ○ add distributed
+        │
+        ○ wrote a readme file
+版本回退就是HEAD指针的指向确定当前版本是哪个
+
+(1、git log 查看历史记录，包括当前版本和以前的版本（按时间顺序的版本）
+(2、git log --pretty=oneline 简洁版的历史记录
+(3、git reset --hard HEAD^ 回退到时间线上的上一个版本有几个^就是回退几次，如果回退多次
+可以用HEAD~100,相当于回退1000次
+(4、git reset --hard id id是某个版本的版本号，可以回退到指定id的版本
+(5、git reflog 查看你的每一次操作，记录了每一次使用过的命令，可以根据这个来获取以前回退过的版本id
+
