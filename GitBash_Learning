@@ -33,8 +33,12 @@ git config --global user.email="github注册邮箱"
 Ⅳ、时光穿梭机
 1、
 (1、git status 查看仓库状态，哪些被修改过
-(2、git diff readme.txt 查看readme.txt被修改了哪些地方
+(2、git diff readme.txt 查看readme.txt工作区和暂存区相比修改了哪些地方
 (3、git add readme.txt 和 git commit -m "备注"进行提交
+
+Changes not staged for commit:表示未提交到暂存区
+Changes to be committed:表示未提交到分支
+
 2、版本回退 回退到上一个操作
 
 ┌────┐
@@ -48,10 +52,37 @@ git config --global user.email="github注册邮箱"
         ○ wrote a readme file
 版本回退就是HEAD指针的指向确定当前版本是哪个
 
-(1、git log 查看历史记录，包括当前版本和以前的版本（按时间顺序的版本）
+(1、git log 查看历史记录，主要是每次修改的备注，包括当前版本和以前的版本（按时间顺序的版本）
 (2、git log --pretty=oneline 简洁版的历史记录
 (3、git reset --hard HEAD^ 回退到时间线上的上一个版本有几个^就是回退几次，如果回退多次
 可以用HEAD~100,相当于回退1000次
 (4、git reset --hard id id是某个版本的版本号，可以回退到指定id的版本
 (5、git reflog 查看你的每一次操作，记录了每一次使用过的命令，可以根据这个来获取以前回退过的版本id
+
+3、工作区和暂存区
+
+工作区：当前的工作目录，如learngit文件夹就是一个工作区
+暂存区：工作区learngit文件夹里有一个.git隐藏目录，称为Git版本库，.git里面最重要的就是一个称为stage
+的暂存区（或者叫index），以及git自动创建的分支master，以及一个指向master的HEAD指针
+
+git add命令是将修改的文件添加到暂存区
+git commit命令是将暂存区的内容提交到分支
+
+4、管理修改
+git跟踪管理修改而不是文件
+
+工作区每次修改都需要git add添加到暂存区，否则不能将工作区的修改添加到分支
+
+5、撤销修改
+git checkout -- readme.txt
+两种情况：
+一、readme.txt修改后还没放到暂存区，撤销后就和上次提交到版本库的一模一样了
+二、readme.txt已经添加到暂存区，又做了修改，撤销后就和提交到暂存区一样了
+
+如果修改的已经提交到暂存区，可以用git reset HEAD readme.txt撤销将修改提交到暂存区，处于unstaged状态
+
+如果想撤销提交到暂存区的修改，可以先使用git reset HEAD readme.txt退出暂存区，然后使用
+git checkout-- readme.txt撤销修改
+
+
 
