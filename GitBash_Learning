@@ -82,7 +82,7 @@ git checkout -- readme.txt
 如果修改的已经提交到暂存区，可以用git reset HEAD readme.txt撤销将修改提交到暂存区，处于unstaged状态
 
 如果想撤销提交到暂存区的修改，可以先使用git reset HEAD readme.txt退出暂存区，然后使用
-git checkout-- readme.txt撤销修改
+git checkout -- readme.txt撤销修改
 
 
 
