@@ -145,4 +145,28 @@ git switch master
 
 实际开发都是多人有自己的分支，人们可以将自己的分支提交到dev上，发布时候才将dev合并到master上
 
-4、Bug分支
+4、Bug分支（学不明白）
+
+修改出现bug的分支，用新的临时分支来修复，修改好后合并分支，并删除临时分支
+
+如果当前有任务未完成，应该将现场储藏起来（不是提交到分支），解决完bug后再继续工作
+
+git stash 暂时保存当前的工作状态，使用git status查看会发现工作区是干净的，没有需要提交的
+
+进而可以修复bug
+
+5、feature分支
+如果一个分支没有被合并是不能用git branch -d <branch>删除的
+只能用强制删除git branch -D <branch>
+
+6、多人协作
+i、
+git remote 查看远程库信息
+git remote -v 查看详细信息，fetch表示抓取权限，push表示推送权限
+
+ii、推送分支
+把本地分支所有提交推送到远程库
+git push origin master(本地分支)
+
+iii、抓取分支
+
