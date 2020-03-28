@@ -9,18 +9,9 @@ Git分布式版本控制系统，相比于集中版本控制系统如svn、BitKe
 支持在Windows、Mac OS x、Linux上安装
 在Windows上安装：
 1、到官网下载git-bash-------git-scm.com
-2、
-i、输入ssh-keygen -t rsa -C"注册github时的邮箱"
-ii、确定密钥保存的文件夹，可以为空，使用默认
-iii、输入密码，可为空
-3、在保存密钥的.ssh文件夹下有两个文件，id_rsa和id_rsa.pub，用记事本打开id_rsa.pub文件，
-复制内容到自己的github中的ssh密钥管理页面，命名并粘贴密钥
-4、输入ssh -T git@github.com并输入yes，检验是否和本地绑定成功
-5、本地配置config信息
+2、本地配置config信息
 git config --global user.name="github用户名"
 git config --global user.email="github注册邮箱"
-6、克隆github仓库到本地
-定位到本地要保存仓库的文件夹，使用cd命令，使用git clone 仓库地址克隆仓库到本地
 
 Ⅲ、创建版本库
 1、mkdir learngit 在当前文件创建空的文件夹叫learngit
@@ -29,6 +20,7 @@ git config --global user.email="github注册邮箱"
 4、git init 把当前目录变成仓库，此时多了一个.git目录，默认隐藏，使用ls -ah可以看见
 5、git add 文件名.拓展名 添加文件，可添加多个文件，用空格隔开
 6、git commit -m "备注" 可一次提交多个添加的文件
+7、ls 显示当前目录文件
 
 Ⅳ、时光穿梭机
 1、
@@ -84,5 +76,42 @@ git checkout -- readme.txt
 如果想撤销提交到暂存区的修改，可以先使用git reset HEAD readme.txt退出暂存区，然后使用
 git checkout -- readme.txt撤销修改
 
+6、删除文件
+可以手动直接删除或者使用命令rm test.txt 
+直接删除工作区的文件，这就导致版本库中没有删除，而本地被删除了，工作区和版本库不一致
+git status查看时就会显示changes not staged for commit，工作区做了修改没有提交
+两种解决情况，
+一、确实要删除工作区和版本区，使用git rm test.txt删掉版本区的文件，然后git commit 提交
+二、工作区属于误删，使用git checkout -- test.txt把版本区里的文件恢复到工作区
+如果修改了内容，又误删，找回后修改的内容丢失
 
 
+Ⅴ远程仓库
+和远程仓库关联先要添加ssh key
+i、输入ssh-keygen -t rsa -C"注册github时的邮箱"
+ii、确定密钥保存的文件夹，可以为空，使用默认
+iii、输入密码，可为空
+iiii、在保存密钥的.ssh文件夹下有两个文件，id_rsa（私钥）和id_rsa.pub（公钥），用记事本打开id_rsa.pub文件，
+复制内容到自己的github中的ssh密钥管理页面，命名并粘贴密钥
+iiiii、输入ssh -T git@github.com并输入yes，检验是否和本地绑定成功
+
+1、添加远程仓库
+实现本地和远程同步，相互关联，现有本地库
+i、使用命令git remote add origin git@github.com:mingzhicui/learngit.git（SSH地址）实现关联
+ii、使用git push -u origin master 推送master分支所有内容，并与远程分支关联
+此时push仍然可能报错，说没有权限，解决方法是
+
+注：
+第一次需要加-u,此后可以使用git push origin master推送最新修改
+第一次关联远程库时，会有一个github服务器key的验证，确认是github服务器的信息
+
+2、从远程库克隆
+先创建远程库，然后从远程库克隆
+i、现在自己的github上创建一个仓库
+ii、使用命令git clone git@github.com:mingzhicui/learngit.git（SSH地址）克隆仓库
+
+注：Git支持多种协议，包括https，但ssh协议速度最快
+
+Ⅵ、分支管理
+分支可以实现各自干各自的工作，开发完毕后再合并分支即可
+1、
