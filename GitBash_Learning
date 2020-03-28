@@ -114,4 +114,35 @@ ii、使用命令git clone git@github.com:mingzhicui/learngit.git（SSH地址）
 
 Ⅵ、分支管理
 分支可以实现各自干各自的工作，开发完毕后再合并分支即可
-1、
+1、创建与合并删除分支 创建、合并、删除的速度非常快
+i、git  checkout -b dev 创建dev分支，并将HEAD指针指向该分支
+相当于先创建，再指向，git branch dev,git checkout dev
+此时修改，提交test.txt文件，当你重新git checkout master时，在test.txt上做的修改就不见了，因为修改在dev分支上
+ii、git branch 查看分支 有*号的为当前分支
+iii、git merge dev 合并指定分支到当前分支，即合并dev分支到当前master分支，此时test.txt上的修改又回来了
+此时采用的是Fast-forward“快进模式”，直接把master指向dev当前的提交
+iiii、git branch -d dev 删除dev分支
+
+注意：
+git checkout <branch>是切换分支
+git checkout -- <file>是撤销修改
+创建并切换分支也可用
+git switch -c dev
+切换分支用
+git switch master
+
+2、解决冲突
+
+当创建了临时分支，做了提交，又切换到别的分支对同一个文件的相同地方做了修改，当进行分支合并时容易造成冲突，
+解决方法是将改文件做手动修改，重新添加和提交
+
+使用git log --graph来查看分支合并图，主线外的是临时分支
+
+3、分支管理策略
+使用git merge --no-ff -m "merge with no-ff" dev 将dev合并到主分支，
+禁止了Fast forward模式
+这样可以使用git log --graph能查询到合并记录
+
+实际开发都是多人有自己的分支，人们可以将自己的分支提交到dev上，发布时候才将dev合并到master上
+
+4、Bug分支
