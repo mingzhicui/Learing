@@ -114,6 +114,7 @@ ii、使用命令git clone git@github.com:mingzhicui/learngit.git（SSH地址）
 
 Ⅵ、分支管理
 分支可以实现各自干各自的工作，开发完毕后再合并分支即可
+
 1、创建与合并删除分支 创建、合并、删除的速度非常快
 i、git  checkout -b dev 创建dev分支，并将HEAD指针指向该分支
 相当于先创建，再指向，git branch dev,git checkout dev
@@ -169,4 +170,80 @@ ii、推送分支
 git push origin master(本地分支)
 
 iii、抓取分支
+多人协作难免同时修改一个文件，容易起冲突，需要先pull最新的修改，然后在本地合并后push
 
+本地新建的分支如果不推送到远程，对其他人就是不可见的；
+
+从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
+
+在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，
+本地和远程分支的名称最好一致；
+
+建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+
+从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+
+Ⅶ、标签管理
+
+tag与commit捆绑，tag是指向commit的指针，tag更容易查找
+
+1、创建标签
+切换到要打标签的分支
+git tag <name> 创建标签
+git tag 查看所有标签
+git tag <name> <commit id> 根据打标签
+git show <tagname> 查看标签信息
+git tag -a <tagname> -m "message" <commit id> 给某个版本创建带有说明的标签
+
+
+git log --pretty=oneline --abbrev-commit 查看更简洁的历史操作以及版本id
+
+
+2、操作标签
+git push origin <tagname> 推送标签到远程
+git push origin --tags 推送所有的标签到远程
+
+删除远程标签
+git tag -d <tagname> 先删除本地标签
+git push origin :refs/tags/<tagname> 再远程删除
+
+
+Ⅷ、GitHub使用
+在自己的github    fork上开源项目
+可以用pull request 来提交修改请求给官方
+
+
+Ⅸ、自定义Git
+1、忽略特殊文件
+在工作区创建.gitignore 文件，里面放想忽略的文件名，Git就可以忽略这些文件，然后把这个文件push就行了
+2、配置别名
+git config --global alias.别名 命令
+如
+git config --global alias.co checkout
+
+--global 参数是全局参数，针对当前用户，不加则只对当前仓库起作用
+
+配置了针对用户的别名的文件在当前用户一个隐藏的.gitconfig文件中，一般在c盘
+配置了针对仓库的别名文件在.git/config文件中
+
+
+如
+# Windows:
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Python:
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+build
+
+# My configurations:
+db.ini
+deploy_key_rsa
+
+
+3、GUI -----SourceTree
