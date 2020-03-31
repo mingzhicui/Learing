@@ -1,0 +1,249 @@
+//GitBash学习
+//廖雪峰官网https://www.liaoxuefeng.com/
+Ⅰ、Git简介
+Git分布式版本控制系统，相比于集中版本控制系统如svn、BitKeeper等，具有如下优点
+1、没有中央服务器，因此不用联网
+2、安全性高，每个人都有完整的版本库，可以相互复制
+
+Ⅱ、Git安装
+支持在Windows、Mac OS x、Linux上安装
+在Windows上安装：
+1、到官网下载git-bash-------git-scm.com
+2、本地配置config信息
+git config --global user.name="github用户名"
+git config --global user.email="github注册邮箱"
+
+Ⅲ、创建版本库
+1、mkdir learngit 在当前文件创建空的文件夹叫learngit
+2、cd learngit 切换到learngit目录
+3、pwd 显示当前目录的路径
+4、git init 把当前目录变成仓库，此时多了一个.git目录，默认隐藏，使用ls -ah可以看见
+5、git add 文件名.拓展名 添加文件，可添加多个文件，用空格隔开
+6、git commit -m "备注" 可一次提交多个添加的文件
+7、ls 显示当前目录文件
+
+Ⅳ、时光穿梭机
+1、
+(1、git status 查看仓库状态，哪些被修改过
+(2、git diff readme.txt 查看readme.txt工作区和暂存区相比修改了哪些地方
+(3、git add readme.txt 和 git commit -m "备注"进行提交
+
+Changes not staged for commit:表示未提交到暂存区
+Changes to be committed:表示未提交到分支
+
+2、版本回退 回退到上一个操作
+
+┌────┐
+│HEAD│
+└────┘
+   │
+   └──> ○ append GPL
+        │
+        ○ add distributed
+        │
+        ○ wrote a readme file
+版本回退就是HEAD指针的指向确定当前版本是哪个
+
+(1、git log 查看历史记录，主要是每次修改的备注，包括当前版本和以前的版本（按时间顺序的版本）
+(2、git log --pretty=oneline 简洁版的历史记录
+(3、git reset --hard HEAD^ 回退到时间线上的上一个版本有几个^就是回退几次，如果回退多次
+可以用HEAD~100,相当于回退1000次
+(4、git reset --hard id id是某个版本的版本号，可以回退到指定id的版本
+(5、git reflog 查看你的每一次操作，记录了每一次使用过的命令，可以根据这个来获取以前回退过的版本id
+
+3、工作区和暂存区
+
+工作区：当前的工作目录，如learngit文件夹就是一个工作区
+暂存区：工作区learngit文件夹里有一个.git隐藏目录，称为Git版本库，.git里面最重要的就是一个称为stage
+的暂存区（或者叫index），以及git自动创建的分支master，以及一个指向master的HEAD指针
+
+git add命令是将修改的文件添加到暂存区
+git commit命令是将暂存区的内容提交到分支
+
+4、管理修改
+git跟踪管理修改而不是文件
+
+工作区每次修改都需要git add添加到暂存区，否则不能将工作区的修改添加到分支
+
+5、撤销修改
+git checkout -- readme.txt
+两种情况：
+一、readme.txt修改后还没放到暂存区，撤销后就和上次提交到版本库的一模一样了
+二、readme.txt已经添加到暂存区，又做了修改，撤销后就和提交到暂存区一样了
+
+如果修改的已经提交到暂存区，可以用git reset HEAD readme.txt撤销将修改提交到暂存区，处于unstaged状态
+
+如果想撤销提交到暂存区的修改，可以先使用git reset HEAD readme.txt退出暂存区，然后使用
+git checkout -- readme.txt撤销修改
+
+6、删除文件
+可以手动直接删除或者使用命令rm test.txt 
+直接删除工作区的文件，这就导致版本库中没有删除，而本地被删除了，工作区和版本库不一致
+git status查看时就会显示changes not staged for commit，工作区做了修改没有提交
+两种解决情况，
+一、确实要删除工作区和版本区，使用git rm test.txt删掉版本区的文件，然后git commit 提交
+二、工作区属于误删，使用git checkout -- test.txt把版本区里的文件恢复到工作区
+如果修改了内容，又误删，找回后修改的内容丢失
+
+
+Ⅴ远程仓库
+和远程仓库关联先要添加ssh key
+i、输入ssh-keygen -t rsa -C"注册github时的邮箱"
+ii、确定密钥保存的文件夹，可以为空，使用默认
+iii、输入密码，可为空
+iiii、在保存密钥的.ssh文件夹下有两个文件，id_rsa（私钥）和id_rsa.pub（公钥），用记事本打开id_rsa.pub文件，
+复制内容到自己的github中的ssh密钥管理页面，命名并粘贴密钥
+iiiii、输入ssh -T git@github.com并输入yes，检验是否和本地绑定成功
+
+1、添加远程仓库
+实现本地和远程同步，相互关联，现有本地库
+i、使用命令git remote add origin git@github.com:mingzhicui/learngit.git（SSH地址）实现关联
+ii、使用git push -u origin master 推送master分支所有内容，并与远程分支关联
+此时push仍然可能报错，说没有权限，解决方法是
+
+注：
+第一次需要加-u,此后可以使用git push origin master推送最新修改
+第一次关联远程库时，会有一个github服务器key的验证，确认是github服务器的信息
+
+2、从远程库克隆
+先创建远程库，然后从远程库克隆
+i、现在自己的github上创建一个仓库
+ii、使用命令git clone git@github.com:mingzhicui/learngit.git（SSH地址）克隆仓库
+
+注：Git支持多种协议，包括https，但ssh协议速度最快
+
+Ⅵ、分支管理
+分支可以实现各自干各自的工作，开发完毕后再合并分支即可
+
+1、创建与合并删除分支 创建、合并、删除的速度非常快
+i、git  checkout -b dev 创建dev分支，并将HEAD指针指向该分支
+相当于先创建，再指向，git branch dev,git checkout dev
+此时修改，提交test.txt文件，当你重新git checkout master时，在test.txt上做的修改就不见了，因为修改在dev分支上
+ii、git branch 查看分支 有*号的为当前分支
+iii、git merge dev 合并指定分支到当前分支，即合并dev分支到当前master分支，此时test.txt上的修改又回来了
+此时采用的是Fast-forward“快进模式”，直接把master指向dev当前的提交
+iiii、git branch -d dev 删除dev分支
+
+注意：
+git checkout <branch>是切换分支
+git checkout -- <file>是撤销修改
+创建并切换分支也可用
+git switch -c dev
+切换分支用
+git switch master
+
+2、解决冲突
+
+当创建了临时分支，做了提交，又切换到别的分支对同一个文件的相同地方做了修改，当进行分支合并时容易造成冲突，
+解决方法是将改文件做手动修改，重新添加和提交
+
+使用git log --graph来查看分支合并图，主线外的是临时分支
+
+3、分支管理策略
+使用git merge --no-ff -m "merge with no-ff" dev 将dev合并到主分支，
+禁止了Fast forward模式
+这样可以使用git log --graph能查询到合并记录
+
+实际开发都是多人有自己的分支，人们可以将自己的分支提交到dev上，发布时候才将dev合并到master上
+
+4、Bug分支（学不明白）
+
+修改出现bug的分支，用新的临时分支来修复，修改好后合并分支，并删除临时分支
+
+如果当前有任务未完成，应该将现场储藏起来（不是提交到分支），解决完bug后再继续工作
+
+git stash 暂时保存当前的工作状态，使用git status查看会发现工作区是干净的，没有需要提交的
+
+进而可以修复bug
+
+5、feature分支
+如果一个分支没有被合并是不能用git branch -d <branch>删除的
+只能用强制删除git branch -D <branch>
+
+6、多人协作
+i、
+git remote 查看远程库信息
+git remote -v 查看详细信息，fetch表示抓取权限，push表示推送权限
+
+ii、推送分支
+把本地分支所有提交推送到远程库
+git push origin master(本地分支)
+
+iii、抓取分支
+多人协作难免同时修改一个文件，容易起冲突，需要先pull最新的修改，然后在本地合并后push
+
+本地新建的分支如果不推送到远程，对其他人就是不可见的；
+
+从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
+
+在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，
+本地和远程分支的名称最好一致；
+
+建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+
+从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+
+Ⅶ、标签管理
+
+tag与commit捆绑，tag是指向commit的指针，tag更容易查找
+
+1、创建标签
+切换到要打标签的分支
+git tag <name> 创建标签
+git tag 查看所有标签
+git tag <name> <commit id> 根据打标签
+git show <tagname> 查看标签信息
+git tag -a <tagname> -m "message" <commit id> 给某个版本创建带有说明的标签
+
+
+git log --pretty=oneline --abbrev-commit 查看更简洁的历史操作以及版本id
+
+
+2、操作标签
+git push origin <tagname> 推送标签到远程
+git push origin --tags 推送所有的标签到远程
+
+删除远程标签
+git tag -d <tagname> 先删除本地标签
+git push origin :refs/tags/<tagname> 再远程删除
+
+
+Ⅷ、GitHub使用
+在自己的github    fork上开源项目
+可以用pull request 来提交修改请求给官方
+
+
+Ⅸ、自定义Git
+1、忽略特殊文件
+在工作区创建.gitignore 文件，里面放想忽略的文件名，Git就可以忽略这些文件，然后把这个文件push就行了
+2、配置别名
+git config --global alias.别名 命令
+如
+git config --global alias.co checkout
+
+--global 参数是全局参数，针对当前用户，不加则只对当前仓库起作用
+
+配置了针对用户的别名的文件在当前用户一个隐藏的.gitconfig文件中，一般在c盘
+配置了针对仓库的别名文件在.git/config文件中
+
+
+如
+# Windows:
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Python:
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+build
+
+# My configurations:
+db.ini
+deploy_key_rsa
+
+
+3、GUI -----SourceTree
